@@ -1,0 +1,40 @@
+{
+    "ned:route": {
+        "ip-route-interface-forwarding-list": [
+        	{
+    	        "prefix": "20.20.20.0",
+                "mask": "255.255.255.0",
+                "fwd-list": [
+            	    {
+                        "fwd": "192.168.1.1"
+            	    }
+                ]
+        	},
+        	{
+        		"prefix": "30.30.30.0",
+                "mask": "255.255.255.0",
+                "fwd-list": [
+            	    {
+                        "fwd": "192.168.1.1"
+            	    }
+                ]	
+        	}
+        ]
+    }
+}
+
+// part deux
+
+{
+    "ned:Loopback": {
+        "name": 100,
+        "ip": {
+            "address": {
+                "primary": {
+                    "address": "10.100.1.1",
+                    "mask": "255.255.255.0"
+                }
+            }
+        }
+    }
+}
