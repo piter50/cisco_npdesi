@@ -12,14 +12,14 @@ if __name__ == "__main__":
     }
 
     commands = ['vlan 150', 'exit', 'interface Eth2/5', 'switchport', 'switchport access vlan 150']
-
+    command_str = ' ; '.join(commands)
     payload = {
         "ins_api": {
             "version": "1.0",
             "type": "cli_conf",
             "chunk": "0",
             "sid": "1",
-            "input": commands,
+            "input": command_str,
             "output_format": "json"
         }
     }
