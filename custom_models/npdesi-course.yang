@@ -1,5 +1,5 @@
-module npdesi-course.yang {
-    namespace "http://npdesi.cisco.com/training"; URI
+module npdesi-course {
+    namespace "http://npdesi.cisco.com/training"; 
     prefix "npdesi";
     organization "Cisco Inc.";
     contact "chuck@npdesi.cisco.com";
@@ -9,29 +9,34 @@ module npdesi-course.yang {
         reference "NPDESI COURSE MODULE";
     }
     container system {
+        description "System container for configuration";
         leaf hostname {
             type string;
-            mandatory true;
             config true;
             description "System Host Name";
         }
         leaf-list dns-servers {
             type string;
-            order-by user;
             config true;
+            ordered-by user;
             description "DNS servers";
         }
     }
     container vlans {
+        description "Vlan container for defining vlans";
         list vlan {
             key vlanid;
+            description "Vlans listed keyed by id";
             leaf vlanid {
-                type uint16;
-                range "1-4096";
+                type uint16 {
+                    range "1 .. 4096";
+                }
                 description "Vlan number 1-4096";
+            }
             leaf name {
                 type string;
                 description "Name of vlan";
+            }
+        }
     }
-
 }
