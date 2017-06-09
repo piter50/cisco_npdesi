@@ -54,8 +54,36 @@ class TestDeviceConfiguration(unittest.TestCase):
         is_there = expected in community_list
         self.assertTrue(is_there)
 
+    def test_cisco_username_devops(self):
+        """Validate cisco_secure is a configured RW string
+        """
+
+        auth = HTTPBasicAuth('cisco', 'cisco')
+        headers = { 'Accept': 'application/vnd.yang.data+json'}
+        url = 'http://csr1kv/restconf/api/config/native'
+        response = requests.get(url, verify=False, headers=headers, auth=auth)
+
+        parse = json.loads(response.text)
+        user_list = parse['ned:native']['username']
+        expected = {'name': "devops"}
+        is_there = expected in user_list
+        self.assertTrue(is_there)
+
+    def test_cisco_username_super_user(self):
+        """Validate cisco_secure is a configured RW string
+        """
+
+        auth = HTTPBasicAuth('cisco', 'cisco')
+        headers = { 'Accept': 'application/vnd.yang.data+json'}
+        url = 'http://csr1kv/restconf/api/config/native'
+        response = requests.get(url, verify=False, headers=headers, auth=auth)
+
+        parse = json.loads(response.text)
+        user_list = parse['ned:native']['username']
+        expected = {'name': "super_user"}
+        is_there = expected in user_list
+        self.assertTrue(is_there)
+
 
 if __name__ == "__main__":
     unittest.main()
-
-              
