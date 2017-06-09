@@ -1,0 +1,36 @@
+---
+
+  - name: PERFORM COMPLIANCE CHECKS
+    hosts: ios
+    connection: local
+    gather_facts: no
+
+    vars:
+      provider:
+        username: cisco
+        password: cisco
+        host: "{{ inventory_hostname }}"
+
+    tasks:
+      - name: GATHER SHOW VERSION
+        ios_command:
+          commands:
+            - show version
+          provider: "{{ provider }}"
+        register: output
+
+      - name: DUMP OUTPUT TO TERMINAL
+        debug:
+          var: output
+
+      - name: VERIFY OS AND CONFIG REGISTER
+        assert:
+          that:
+            - "'Version 16.3' in output ['stdout'][0]"
+            - "'Configuration register is 0x2102' in output ['stdout'][0]"
+
+      - name: ENSURE SNMP RO EXISTS
+        ios_config:
+          commands:
+            - snmp-server community PUBLIC_SECURITY ro
+          provider: "{{ provider }}"
