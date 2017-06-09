@@ -1,0 +1,61 @@
+---
+
+  - name: ENSURE TENANT TENANT1 EXISTS ON NEXUS SWITCH
+    hosts: nxos
+    connection: local
+    gather_facts: no
+
+    vars:
+      provider:
+        username: cisco
+        password: cisco
+        transport: nxapi
+        host: "{{ inventory_hostname }}"
+
+    tasks:
+
+      - name: DETERMINE VRF TENANT1 EXISTS
+        nxos_vrf:
+          vrf: TENANT1
+          provider: "{{ provider }}"
+
+      - name: VLAN10 exists
+        nxos_vlan:
+          vlan_id: 10
+          name: TENANT1_VLAN
+          vlan_state: active
+          provider: "{{ provider }}"
+
+      - name: VLAN10 SVI exists
+        nxos_interface:
+          interface: Vlan10
+          mode: layer3
+          provider: "{{ provider }}"
+
+      - name: VLAN10 SVI in VRF TENANT1
+        nxos_vrf_interface:
+          interface: Vlan10
+          vrf: TENANT1
+          provider: "{{ provider }}"
+
+      - name: VLAN10 SVI IP CONFIG
+        nxos_ip_interface:
+          interface: Vlan10
+          addr: 10.1.10.1
+          mask: 24
+          version: v4
+          provider: "{{ provider }}"
+
+      - name: Ethernet2/24 INTERFACE CHECK
+        nxos_interface:
+          interface: Ethernet2/24
+          mode: layer2
+          admin_state: up
+          provider: "{{ provider }}"
+
+      - name: Ethernet2/24 VLAN ASSIGNMENT
+        nxos_switchport:
+          interface: Ethernet2/24
+          mode: access
+          access_vlan: 10
+          provider: "{{ provider }}"
