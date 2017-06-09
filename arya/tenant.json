@@ -1,0 +1,1 @@
+{"fvTenant":{"attributes":{"dn":"uni/tn-Accounting","name":"Accounting","descr":"Created by Arya and Cobra Code","rn":"tn-Accounting","status":"created"},"children":[{"fvCtx":{"attributes":{"dn":"uni/tn-Accounting/ctx-external","name":"external","rn":"ctx-external","status":"created"},"children":[]}}]}}
